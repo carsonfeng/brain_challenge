@@ -1,4 +1,4 @@
-name: Deploy React to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   # 当推送到master分支时运行
@@ -9,9 +9,7 @@ on:
 
 # 设置GITHUB_TOKEN的权限
 permissions:
-  contents: read
-  pages: write      # 允许部署到 GitHub Pages
-  id-token: write   # 允许使用OIDC进行身份验证
+  contents: write
 
 # 允许一个并发部署
 concurrency:
@@ -20,55 +18,27 @@ concurrency:
 
 # 单个部署工作流，包含构建和部署步骤
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
+
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          
+
       - name: Install dependencies
         run: npm install
-        
+
       - name: Build
         run: npm run build
         env:
           CI: false
 
-      # 手动设置用于GitHub Pages的artifact
-      - name: Package build directory
-        run: |
-          cd build
-          zip -r ../build.zip .
-          
-      - name: Upload build zip  
-        uses: actions/upload-artifact@v3
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          name: github-pages
-          path: build.zip
-          
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Download build
-        uses: actions/download-artifact@v3
-        with:
-          name: github-pages
-          
-      - name: Unzip build
-        run: unzip build.zip -d .
-        
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-        
-      - name: Deploy
-        id: deployment
-        uses: actions/deploy-pages@v2 
+          folder: build
+          branch: gh-pages 
