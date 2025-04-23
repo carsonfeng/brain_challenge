@@ -16,17 +16,23 @@ permissions:
 # 允许一个并发部署
 concurrency:
   group: "pages"
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 # 单个部署工作流，包含构建和部署步骤
 jobs:
-  build:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       
-      - name: Set up Node.js
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+        
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 16
@@ -38,21 +44,13 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          PUBLIC_URL: "https://brainchallenge.carsonfeng.xyz"
           CI: false
-          
+        
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v2
         with:
-          path: ./build
-
-  deploy:
-    needs: build
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
+          path: './build'
+          
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2 
