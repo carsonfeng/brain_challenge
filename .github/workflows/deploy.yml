@@ -18,7 +18,7 @@ concurrency:
 
 # 单个部署工作流，包含构建和部署步骤
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -37,11 +37,21 @@ jobs:
         env:
           CI: false
 
+      # 调试: 查看build目录内容
+      - name: List build directory
+        run: |
+          echo "查看build目录内容"
+          ls -la build/
+          echo "检查index.html"
+          cat build/index.html | grep -i "script\|css"
+
+      # 使用第三方部署
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
-          publish_branch: gh-pages
-          cname: brainchallenge.carsonfeng.xyz
-          force_orphan: true 
+          force_orphan: true
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'Deploy website - ${{ github.event.head_commit.message }}' 

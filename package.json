@@ -47,7 +47,7 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://brainchallenge.carsonfeng.xyz",
+  "homepage": "/",
   "devDependencies": {
     "@types/antd": "^1.0.4",
     "gh-pages": "^6.1.1"
