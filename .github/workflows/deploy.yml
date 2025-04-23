@@ -20,7 +20,7 @@ concurrency:
 
 # 单个部署工作流，包含构建和部署步骤
 jobs:
-  deploy:
+  build-and-deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -36,7 +36,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: 'npm'
           
       - name: Install dependencies
         run: npm install
@@ -47,10 +46,10 @@ jobs:
           CI: false
         
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v1
         with:
-          path: './build'
+          path: build
           
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2 
+        uses: actions/deploy-pages@v1 
