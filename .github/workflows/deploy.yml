@@ -41,7 +41,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          PUBLIC_URL: "/${{ github.event.repository.name }}"
+          PUBLIC_URL: "https://brainchallenge.carsonfeng.xyz"
           CI: false
         
       - name: Setup Pages
