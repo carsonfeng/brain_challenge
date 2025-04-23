@@ -9,9 +9,7 @@ on:
 
 # 设置GITHUB_TOKEN的权限
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 # 允许一个并发部署
 concurrency:
@@ -20,17 +18,11 @@ concurrency:
 
 # 单个部署工作流，包含构建和部署步骤
 jobs:
-  build-and-deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v2
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -45,11 +37,9 @@ jobs:
         env:
           CI: false
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: build
-
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1 
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
+          cname: brainchallenge.carsonfeng.xyz 
