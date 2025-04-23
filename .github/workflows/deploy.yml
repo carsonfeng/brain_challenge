@@ -20,10 +20,7 @@ concurrency:
 
 # 单个部署工作流，包含构建和部署步骤
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -43,15 +40,19 @@ jobs:
         env:
           PUBLIC_URL: "https://brainchallenge.carsonfeng.xyz"
           CI: false
-        
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-        
+          
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./build
-          
+
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2 
