@@ -1,46 +1,54 @@
-# Getting Started with Create React App
+# Dobble Cards Generator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+互动式Dobble卡牌生成器，可以创建自定义的Dobble/Spot It风格卡片。
 
-## Available Scripts
+![Dobble卡片示例](public/images/preview.jpg)
 
-In the project directory, you can run:
+## 功能特点
 
-### `npm start`
+- 支持多种卡片配置（3-8个符号/卡片）
+- 上传自定义图片或使用默认图像
+- 美观的卡片布局与随机分布
+- 预览卡片效果
+- 导出为PNG图像或ZIP文件
+- 优化的图像分布算法，避免重叠
+- 支持中文和多种卡片样式
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 如何使用
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1. 选择您想要的配置（每张卡片上的符号数量）
+2. 上传您自己的图片或使用默认图像
+3. 点击"预览"查看效果
+4. 点击"生成卡片"创建可下载的卡片
 
-### `npm test`
+## 本地开发
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+# 安装依赖
+npm install
 
-### `npm run build`
+# 启动开发服务器
+npm start
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# 构建项目
+npm run build
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# 部署到GitHub Pages
+npm run deploy
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 部署
 
-### `npm run eject`
+此项目已配置为使用GitHub Pages自动部署。推送到主分支后，更改将自动部署到: 
+https://[你的GitHub用户名].github.io/brain_challenge/
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## 技术栈
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- React
+- TypeScript 
+- HTML Canvas
+- Ant Design
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## 致谢
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+感谢所有原始Dobble游戏的灵感。
